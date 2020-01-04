@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PostsListComponent } from './posts-list/posts-list.component';
+import { NewsListComponent } from './news-list/news-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { NewsDetailComponent } from '@app/news-detail/news-detail.component';
 
 
 const routes: Routes = [
-  {path: 'posts', component: PostsListComponent},
-  {path: '', redirectTo: '/posts', pathMatch: 'full'},
+  {path: 'news', component: NewsListComponent},
+  {path: 'news/:id', component: NewsDetailComponent},
+  {path: '', redirectTo: '/news', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
 ];
 

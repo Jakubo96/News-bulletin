@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-4 mb-4" *ngFor="let news of newsList | async">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ news.title }}</h5>
+          <p class="card-text">{{ news.content }}</p>
+          <a [routerLink]="news.id" class="btn btn-primary">Go to detail page</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

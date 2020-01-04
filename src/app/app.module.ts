@@ -1,25 +1,31 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './header/header.component';
-import { PostsListComponent } from './posts-list/posts-list.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '@environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AppRoutingModule } from '@app/app-routing.module';
+import { AppComponent } from '@app/app.component';
+import { HeaderComponent } from '@app/header/header.component';
+import { NewsListComponent } from '@app/news-list/news-list.component';
+import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.component';
+import { NewsDetailComponent } from './news-detail/news-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    PostsListComponent,
-    PageNotFoundComponent
+    NewsListComponent,
+    PageNotFoundComponent,
+    NewsDetailComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     ReactiveFormsModule
   ],
   providers: [],
