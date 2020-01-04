@@ -1,6 +1,10 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "whitespace": [
+      true,
+      "check-module"
+    ],
     "array-type": false,
     "arrow-parens": false,
     "deprecation": {
