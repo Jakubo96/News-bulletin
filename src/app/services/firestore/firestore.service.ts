@@ -11,13 +11,13 @@ import { map } from 'rxjs/operators';
 export class FirestoreService {
 
   private _newsCollection: AngularFirestoreCollection<News>;
-  private _newsList: Observable<News[]>;
+  private _newsList$: Observable<News[]>;
 
   private _newsDocs = new Map<string, AngularFirestoreDocument<News>>();
-  private _newsItems = new Map<string, Observable<News>>();
+  private _newsItems$ = new Map<string, Observable<News>>();
 
-  public get newsList() {
-    return this._newsList;
+  public get newsList$(): Observable<News[]> {
+    return this._newsList$;
   }
 
   constructor(private afs: AngularFirestore) {
@@ -26,7 +26,7 @@ export class FirestoreService {
 
   private initializeNews() {
     this._newsCollection = this.afs.collection<News>(FirestoreCollections.NEWS);
-    this._newsList = this._newsCollection.snapshotChanges().pipe(
+    this._newsList$ = this._newsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as News;
         const id = a.payload.doc.id;
@@ -37,8 +37,8 @@ export class FirestoreService {
   }
 
   public getNewsItem(id: string): Observable<News> {
-    if (this._newsItems.has(id)) {
-      return this._newsItems.get(id);
+    if (this._newsItems$.has(id)) {
+      return this._newsItems$.get(id);
     }
 
     const {newsItem} = this.loadNewNews(id);
@@ -68,7 +68,7 @@ export class FirestoreService {
       ));
 
     this._newsDocs.set(id, newsDoc);
-    this._newsItems.set(id, newsItem);
+    this._newsItems$.set(id, newsItem);
 
     return {newsDoc, newsItem};
   }

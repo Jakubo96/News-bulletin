@@ -10,12 +10,12 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 })
 export class NewsListComponent implements OnInit {
 
-  public newsList: Observable<News[]>;
+  public newsList$: Observable<News[]>;
 
   constructor(private firestoreService: FirestoreService) {
   }
 
   ngOnInit() {
-    this.newsList = this.firestoreService.newsList;
+    this.newsList$ = this.firestoreService.newsList$;
   }
 }

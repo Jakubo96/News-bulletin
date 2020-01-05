@@ -11,7 +11,7 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 })
 export class NewsDetailComponent implements OnInit {
 
-  public newsItem: Observable<News>;
+  public newsItem$: Observable<News>;
 
   constructor(private route: ActivatedRoute,
               private firestoreService: FirestoreService) {
@@ -23,6 +23,6 @@ export class NewsDetailComponent implements OnInit {
 
   private loadProductDetails() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.newsItem = this.firestoreService.getNewsItem(id);
+    this.newsItem$ = this.firestoreService.getNewsItem(id);
   }
 }

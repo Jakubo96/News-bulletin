@@ -1,1 +1,13 @@
-{{newsItem | async | json}}
+<div class="container text-center" *ngIf="newsItem$ | async as newsItem">
+  <div class="row">
+    <div class="col">
+      <h2>{{ newsItem.title }}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+      <p>{{ newsItem.content }}</p>
+    </div>
+  </div>
+</div>

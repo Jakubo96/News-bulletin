@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <div class="col-4 mb-4" *ngFor="let news of newsList | async">
+    <div class="col-4 mb-4" *ngFor="let news of newsList$ | async">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ news.title }}</h5>
