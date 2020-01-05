@@ -4,17 +4,33 @@
       <h2>{{ newsItem.title }}</h2>
     </div>
   </div>
+
   <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
       <p>{{ newsItem.content }}</p>
     </div>
   </div>
-  <div class="row">
+
+  <div class="row mb-4">
     <div class="col-5">
     </div>
     <div class="col-2">
       <button type="button" class="btn btn-danger" (click)="deleteDocument()">Delete news</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-8">
+      <ngb-carousel *ngIf="newsItem.imagesUrls?.length" [showNavigationArrows]="true" [showNavigationIndicators]="true">
+        <ng-template ngbSlide *ngFor="let url of newsItem.imagesUrls">
+          <div>
+            <img [src]="url" alt="one of images">
+          </div>
+        </ng-template>
+      </ngb-carousel>
     </div>
   </div>
 </div>
