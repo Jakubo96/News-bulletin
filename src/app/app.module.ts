@@ -14,6 +14,7 @@ import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { CreateNewsComponent } from './news/create-news/create-news.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AngularFireStorageModule } from '@angular/fire/storage';
+import { ImagesCarouselComponent } from './images-carousel/images-carousel.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     NewsListComponent,
     PageNotFoundComponent,
     NewsDetailComponent,
-    CreateNewsComponent
+    CreateNewsComponent,
+    ImagesCarouselComponent
   ],
   imports: [
     BrowserModule,

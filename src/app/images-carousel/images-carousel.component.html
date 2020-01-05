@@ -1,0 +1,8 @@
+<ngb-carousel *ngIf="imagesUrls?.length" [showNavigationArrows]="true"
+              [showNavigationIndicators]="true">
+  <ng-template ngbSlide *ngFor="let url of imagesUrls">
+    <div>
+      <img [src]="url" alt="one of images">
+    </div>
+  </ng-template>
+</ngb-carousel>

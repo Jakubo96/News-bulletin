@@ -24,13 +24,7 @@
     <div class="col-2">
     </div>
     <div class="col-8">
-      <ngb-carousel *ngIf="newsItem.imagesUrls?.length" [showNavigationArrows]="true" [showNavigationIndicators]="true">
-        <ng-template ngbSlide *ngFor="let url of newsItem.imagesUrls">
-          <div>
-            <img [src]="url" alt="one of images">
-          </div>
-        </ng-template>
-      </ngb-carousel>
+      <app-images-carousel [imagesUrls]="newsItem.imagesUrls"></app-images-carousel>
     </div>
   </div>
 </div>

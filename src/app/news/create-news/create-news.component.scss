@@ -3,3 +3,8 @@ ngx-file-drop {
     cursor: pointer;
   }
 }
+
+app-images-carousel::ng-deep img {
+  width: 34rem;
+  height: 24rem;
+}
