@@ -15,6 +15,8 @@ import { CreateNewsComponent } from './news/create-news/create-news.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ImagesCarouselComponent } from './images-carousel/images-carousel.component';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { ImagesCarouselComponent } from './images-carousel/images-carousel.compo
     PageNotFoundComponent,
     NewsDetailComponent,
     CreateNewsComponent,
-    ImagesCarouselComponent
+    ImagesCarouselComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { ImagesCarouselComponent } from './images-carousel/images-carousel.compo
     AngularFirestoreModule,
     ReactiveFormsModule,
     NgxFileDropModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
