@@ -28,8 +28,8 @@ export class NewsDetailComponent implements OnInit {
     this.newsItem$ = this.firestoreService.getNewsItem(this.newsId);
   }
 
-  public async deleteDocument(): Promise<void> {
-    await this.firestoreService.removeDoc(this.newsId);
+  public deleteDocument(): void {
+    this.firestoreService.removeDoc(this.newsId);
 
     this.router.navigate(['/news']);
   }

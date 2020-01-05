@@ -53,11 +53,13 @@ export class FirestoreService {
     return res.id;
   }
 
-  public async removeDoc(id: string): Promise<void> {
-    await this._newsDocs.get(id).delete();
+  public removeDoc(id: string): void {
+    this._newsDocs.get(id).delete();
 
     this._newsDocs.delete(id);
     this._newsItems$.delete(id);
+
+    this.initializeNews();
   }
 
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {
