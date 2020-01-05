@@ -15,7 +15,14 @@ export class NewsListComponent implements OnInit {
   public newsList: Observable<News[]>;
 
   constructor(private afs: AngularFirestore) {
-    this.newsCollection = afs.collection<News>('news');
+  }
+
+  ngOnInit() {
+    this.loadNewsList();
+  }
+
+  private loadNewsList() {
+    this.newsCollection = this.afs.collection<News>('news');
     this.newsList = this.newsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as News;
@@ -25,8 +32,4 @@ export class NewsListComponent implements OnInit {
       }))
     );
   }
-
-  ngOnInit() {
-  }
-
 }
