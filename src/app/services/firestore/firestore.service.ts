@@ -4,6 +4,7 @@ import { News } from '@app/news/news';
 import { FirestoreCollections } from '@app/services/firestore/firestore-collections';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class FirestoreService {
     return this._newsList$;
   }
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.initializeNews();
   }
 
@@ -60,6 +61,16 @@ export class FirestoreService {
     this._newsItems$.delete(id);
 
     this.initializeNews();
+  }
+
+  public uploadFile(filePath: string, file: Blob): Observable<any> {
+    const ref = this.storage.ref(filePath);
+
+    return ref.put(file).snapshotChanges();
+  }
+
+  public getFileUrl(filePath: string): Observable<string> {
+    return this.storage.ref(filePath).getDownloadURL();
   }
 
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {

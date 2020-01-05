@@ -13,6 +13,7 @@ import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.compon
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 import { CreateNewsComponent } from './news/create-news/create-news.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ReactiveFormsModule,
-    NgxFileDropModule
+    NgxFileDropModule,
+    AngularFireStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
