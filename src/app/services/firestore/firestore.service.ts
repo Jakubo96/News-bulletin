@@ -47,6 +47,19 @@ export class FirestoreService {
     return newsItem;
   }
 
+  public async createNewsDoc(item: News): Promise<string> {
+    const res = await this._newsCollection.add(item);
+
+    return res.id;
+  }
+
+  public async removeDoc(id: string): Promise<void> {
+    await this._newsDocs.get(id).delete();
+
+    this._newsDocs.delete(id);
+    this._newsItems$.delete(id);
+  }
+
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {
     if (this._newsDocs.has(id)) {
       return this._newsDocs.get(id);
@@ -55,12 +68,6 @@ export class FirestoreService {
     const {newsDoc} = this.loadNewNews(id);
 
     return newsDoc;
-  }
-
-  public async createNewsDoc(item: News): Promise<string> {
-    const res = await this._newsCollection.add(item);
-
-    return res.id;
   }
 
   private loadNewNews(id: string): { newsDoc: AngularFirestoreDocument<News>, newsItem: Observable<News> } {

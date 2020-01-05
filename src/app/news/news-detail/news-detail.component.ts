@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { News } from '@app/news/news';
 import { Observable } from 'rxjs';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
@@ -11,9 +11,11 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 })
 export class NewsDetailComponent implements OnInit {
 
+  private newsId: string;
   public newsItem$: Observable<News>;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private firestoreService: FirestoreService) {
   }
 
@@ -22,7 +24,13 @@ export class NewsDetailComponent implements OnInit {
   }
 
   private loadProductDetails(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.newsItem$ = this.firestoreService.getNewsItem(id);
+    this.newsId = this.route.snapshot.paramMap.get('id');
+    this.newsItem$ = this.firestoreService.getNewsItem(this.newsId);
+  }
+
+  public async deleteDocument(): Promise<void> {
+    await this.firestoreService.removeDoc(this.newsId);
+
+    this.router.navigate(['/news']);
   }
 }
