@@ -33,4 +33,8 @@ export class NewsDetailComponent implements OnInit {
 
     this.router.navigate(['/news']);
   }
+
+  editDocument(): void {
+    this.router.navigate(['/create', this.newsId]);
+  }
 }

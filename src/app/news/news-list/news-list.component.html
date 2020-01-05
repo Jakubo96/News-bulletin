@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mb-5">
   <ng-container *ngIf="newsList$ | async as newsList">
     <div class="row" *ngIf="newsList.length else noNews">
       <div class="col-4 mb-4" *ngFor="let news of newsList">

@@ -54,8 +54,14 @@ export class FirestoreService {
     return res.id;
   }
 
+  public updateDoc(item: News): void {
+    this.getNewsDoc(item.id).update(item);
+
+    this.initializeNews();
+  }
+
   public removeDoc(id: string): void {
-    this._newsDocs.get(id).delete();
+    this.getNewsDoc(id).delete();
 
     this._newsDocs.delete(id);
     this._newsItems$.delete(id);

@@ -9,6 +9,7 @@ import { CreateNewsComponent } from '@app/news/create-news/create-news.component
 const routes: Routes = [
   {path: 'news', component: NewsListComponent},
   {path: 'create', component: CreateNewsComponent},
+  {path: 'create/:id', component: CreateNewsComponent},
   {path: 'news/:id', component: NewsDetailComponent},
   {path: '', redirectTo: '/news', pathMatch: 'full'},
   {path: '**', component: PageNotFoundComponent}
