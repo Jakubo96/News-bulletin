@@ -21,7 +21,7 @@ export class NewsDetailComponent implements OnInit {
     this.loadProductDetails();
   }
 
-  private loadProductDetails() {
+  private loadProductDetails(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.newsItem$ = this.firestoreService.getNewsItem(id);
   }

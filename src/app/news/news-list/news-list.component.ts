@@ -16,6 +16,10 @@ export class NewsListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadNewsList();
+  }
+
+  private loadNewsList(): void {
     this.newsList$ = this.firestoreService.newsList$;
   }
 }

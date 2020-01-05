@@ -11,6 +11,7 @@ import { HeaderComponent } from '@app/header/header.component';
 import { NewsListComponent } from '@app/news/news-list/news-list.component';
 import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.component';
 import { NewsDetailComponent } from './news/news-detail/news-detail.component';
+import { CreateNewsComponent } from './news/create-news/create-news.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewsDetailComponent } from './news/news-detail/news-detail.component';
     HeaderComponent,
     NewsListComponent,
     PageNotFoundComponent,
-    NewsDetailComponent
+    NewsDetailComponent,
+    CreateNewsComponent
   ],
   imports: [
     BrowserModule,

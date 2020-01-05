@@ -47,13 +47,20 @@ export class FirestoreService {
     return newsItem;
   }
 
-  public getNewsDoc(id: string): AngularFirestoreDocument<News> {
+  private getNewsDoc(id: string): AngularFirestoreDocument<News> {
     if (this._newsDocs.has(id)) {
       return this._newsDocs.get(id);
     }
+
     const {newsDoc} = this.loadNewNews(id);
 
     return newsDoc;
+  }
+
+  public async createNewsDoc(item: News): Promise<string> {
+    const res = await this._newsCollection.add(item);
+
+    return res.id;
   }
 
   private loadNewNews(id: string): { newsDoc: AngularFirestoreDocument<News>, newsItem: Observable<News> } {
