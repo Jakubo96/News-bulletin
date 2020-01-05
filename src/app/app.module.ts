@@ -8,9 +8,9 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
 import { HeaderComponent } from '@app/header/header.component';
-import { NewsListComponent } from '@app/news-list/news-list.component';
+import { NewsListComponent } from '@app/news/news-list/news-list.component';
 import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.component';
-import { NewsDetailComponent } from './news-detail/news-detail.component';
+import { NewsDetailComponent } from './news/news-detail/news-detail.component';
 
 @NgModule({
   declarations: [

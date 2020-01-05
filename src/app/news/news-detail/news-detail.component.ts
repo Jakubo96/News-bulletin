@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { News } from '@app/news-list/news';
+import { News } from '@app/news/news';
 import { Observable } from 'rxjs';
+import { FirestoreService } from '@app/services/firestore/firestore.service';
 
 @Component({
   selector: 'app-news-detail',
@@ -11,11 +11,10 @@ import { Observable } from 'rxjs';
 })
 export class NewsDetailComponent implements OnInit {
 
-  private newsDoc: AngularFirestoreDocument<News>;
   public newsItem: Observable<News>;
 
   constructor(private route: ActivatedRoute,
-              private afs: AngularFirestore) {
+              private firestoreService: FirestoreService) {
   }
 
   ngOnInit() {
@@ -24,7 +23,6 @@ export class NewsDetailComponent implements OnInit {
 
   private loadProductDetails() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.newsDoc = this.afs.doc<News>(`news/${id}`);
-    this.newsItem = this.newsDoc.valueChanges();
+    this.newsItem = this.firestoreService.getNewsItem(id);
   }
 }

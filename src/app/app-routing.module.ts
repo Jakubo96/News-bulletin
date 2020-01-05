@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NewsListComponent } from './news-list/news-list.component';
+import { NewsListComponent } from './news/news-list/news-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { NewsDetailComponent } from '@app/news-detail/news-detail.component';
+import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component';
 
 
 const routes: Routes = [
