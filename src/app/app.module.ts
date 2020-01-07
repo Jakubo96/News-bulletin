@@ -16,7 +16,8 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { ImagesCarouselComponent } from './images-carousel/images-carousel.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     NewsDetailComponent,
     CreateNewsComponent,
     ImagesCarouselComponent,
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

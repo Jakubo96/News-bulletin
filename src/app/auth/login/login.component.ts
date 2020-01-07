@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { auth } from 'firebase';
 
 @Component({
   selector: 'app-login',
@@ -32,10 +33,15 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/news']);
   }
 
+  public async loginWithGoogle() {
+    await this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider());
+    this.router.navigate(['/news']);
+  }
+
   private buildForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
+      password: ['', Validators.required, Validators.minLength(6)]
     });
   }
 }

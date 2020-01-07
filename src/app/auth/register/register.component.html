@@ -4,7 +4,7 @@
     </div>
     <div class="col-8">
       <h3>Login</h3>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-50">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="w-50">
         <div class="form-group">
           <label>Email</label>
           <input type="text" class="form-control" formControlName="email">
@@ -15,9 +15,14 @@
           <input type="password" class="form-control" formControlName="password">
         </div>
 
-        <button [disabled]="!loginForm.valid" type="submit"
+        <div class="form-group">
+          <label>Repeat password</label>
+          <input type="password" class="form-control" formControlName="repeatedPassword">
+        </div>
+
+        <button [disabled]="!registerForm.valid" type="submit"
                 class="btn btn-success">
-          Login
+          Register
         </button>
       </form>
     </div>

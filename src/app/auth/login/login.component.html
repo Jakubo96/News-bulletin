@@ -1,0 +1,35 @@
+<div class="container mb-5">
+  <div class="row mb-4">
+    <div class="col-2">
+    </div>
+    <div class="col-8">
+      <h3>Login</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-50">
+        <div class="form-group">
+          <label>Email</label>
+          <input type="text" class="form-control" formControlName="email">
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" class="form-control" formControlName="password">
+        </div>
+
+        <div class="d-flex justify-content-between">
+        <button [disabled]="!loginForm.valid" type="submit"
+                class="btn btn-success">
+          Login
+        </button>
+          <button routerLink="/register"
+                class="btn btn-warning">
+          Register
+        </button>
+          <button (click)="loginWithGoogle()"
+                  class="btn btn-info">
+            Login with Google
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
