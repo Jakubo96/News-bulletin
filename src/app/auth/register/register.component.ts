@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { PasswordValidation } from '@app/auth/register/password-validation';
+import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 
 @Component({
   selector: 'app-register',
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
 
   public registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private afAuth: AngularFireAuth, private router: Router) {
+  constructor(private fb: FormBuilder, private firebaseAuth: FirebaseAuthService, private router: Router) {
   }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public async onSubmit(): Promise<void> {
-    await this.afAuth.auth.createUserWithEmailAndPassword(this.email.value, this.password.value);
+    await this.firebaseAuth.createUser(this.email.value, this.password.value);
     this.router.navigate(['/news']);
   }
 }

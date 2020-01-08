@@ -4,7 +4,7 @@
     </div>
     <div class="col-8">
       <h3>Login</h3>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="w-50">
+      <form [formGroup]="loginForm" (ngSubmit)="signInWithEmailAndPassword()" class="w-50">
         <div class="form-group">
           <label>Email</label>
           <input type="text" class="form-control" formControlName="email">
