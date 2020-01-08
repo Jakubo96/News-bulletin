@@ -1,18 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-images-carousel',
-  templateUrl: './images-carousel.component.html',
-  styleUrls: ['./images-carousel.component.scss']
+    selector: 'app-images-carousel',
+    templateUrl: './images-carousel.component.html',
+    styleUrls: ['./images-carousel.component.scss']
 })
 export class ImagesCarouselComponent implements OnInit {
 
-  @Input() public imagesUrls: string[];
+    @Input() public imagesUrls: string[];
+    @Output() public imageRemoved = new EventEmitter<number>();
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
+    public removeUrl(i: number): void {
+        this.imageRemoved.emit(i);
+    }
 }

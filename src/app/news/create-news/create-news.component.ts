@@ -64,7 +64,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
 
   private isFileAllowed(droppedFile: NgxFileDropEntry): boolean {
     return droppedFile.fileEntry.isFile &&
-      this.allowedFormats.some(format => droppedFile.relativePath.endsWith(format));
+      this.allowedFormats.some(format => droppedFile.relativePath.toLowerCase().endsWith(format));
   }
 
   public async onSubmit(): Promise<void> {
@@ -84,6 +84,10 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
 
       this.router.navigate(['/news', this.newsId]);
     }
+  }
+
+  public onImageRemoved(urlId: number): void {
+    this.imagesUrls.splice(urlId, 1);
   }
 
   private buildForm(): void {
