@@ -5,6 +5,7 @@ import { FirestoreCollections } from '@app/services/firestore/firestore-collecti
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { User } from '@app/auth/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,22 @@ export class FirestoreService {
   private _newsDocs = new Map<string, AngularFirestoreDocument<News>>();
   private _newsItems$ = new Map<string, Observable<News>>();
 
+  private _usersCollection: AngularFirestoreCollection<User>;
+
   public get newsList$(): Observable<News[]> {
     return this._newsList$;
   }
 
   constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
-    this.initializeNews();
+    this.initializeCollections();
   }
 
-  private initializeNews() {
+  private initializeCollections(): void {
+    this.initializeNews();
+    this.initializeUsers();
+  }
+
+  private initializeNews(): void {
     this._newsCollection = this.afs.collection<News>(FirestoreCollections.NEWS);
     this._newsList$ = this._newsCollection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
@@ -35,6 +43,10 @@ export class FirestoreService {
         return {id, ...data};
       }))
     );
+  }
+
+  private initializeUsers(): void {
+    this._usersCollection = this.afs.collection<User>(FirestoreCollections.USERS);
   }
 
   public getNewsItem(id: string): Observable<News> {
@@ -104,5 +116,13 @@ export class FirestoreService {
     this._newsItems$.set(id, newsItem);
 
     return {newsDoc, newsItem};
+  }
+
+  public getUserDoc(id: string): Observable<User> {
+    return this._usersCollection.doc<User>(id).valueChanges();
+  }
+
+  public async createUsersDoc(id: string, user: User): Promise<void> {
+    await this._usersCollection.doc<User>(id).set(user);
   }
 }
