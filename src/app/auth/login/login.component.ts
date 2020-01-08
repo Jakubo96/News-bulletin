@@ -32,8 +32,13 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/news']);
   }
 
-  public async loginWithGoogle() {
+  public async loginWithGoogle(): Promise<void> {
     await this.firebaseAuth.loginWithGoogle();
+    this.router.navigate(['/news']);
+  }
+
+  public async loginWithFacebook(): Promise<void> {
+    await this.firebaseAuth.loginWithFacebook();
     this.router.navigate(['/news']);
   }
 

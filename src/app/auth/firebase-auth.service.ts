@@ -53,6 +53,12 @@ export class FirebaseAuthService implements OnDestroy {
     this.createUserDoc(credentials.user);
   }
 
+  public async loginWithFacebook(): Promise<void> {
+    const credentials = await this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
+
+    this.createUserDoc(credentials.user);
+  }
+
   public async logout(): Promise<void> {
     await this.afAuth.auth.signOut();
   }
