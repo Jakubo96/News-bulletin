@@ -14,17 +14,16 @@
           <label>Password</label>
           <input type="password" class="form-control" formControlName="password">
         </div>
-
         <div class="d-flex justify-content-between">
-        <button [disabled]="!loginForm.valid" type="submit"
-                class="btn btn-success">
-          Login
-        </button>
-          <button routerLink="/register"
-                class="btn btn-warning">
-          Register
-        </button>
-          <button (click)="loginWithGoogle()"
+          <button [disabled]="!loginForm.valid" type="submit"
+                  class="btn btn-success">
+            Login
+          </button>
+          <button type="button" routerLink="/register"
+                  class="btn btn-warning">
+            Register
+          </button>
+          <button type="button" (click)="loginWithGoogle()"
                   class="btn btn-info">
             Login with Google
           </button>
