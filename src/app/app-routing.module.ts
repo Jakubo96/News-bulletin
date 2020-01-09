@@ -6,10 +6,10 @@ import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component
 import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
 import { LoginComponent } from '@app/auth/login/login.component';
 import { RegisterComponent } from '@app/auth/register/register.component';
-import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { canActivate, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 
-const redirectUnauthorizedToUnauthorized = () => redirectUnauthorizedTo(['unauthorized']);
+const redirectUnauthorizedToUnauthorized = redirectUnauthorizedTo(['unauthorized']);
 
 const routes: Routes = [
   {path: 'news', component: NewsListComponent},
@@ -18,14 +18,12 @@ const routes: Routes = [
   {
     path: 'create',
     component: CreateNewsComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: {authGuardPipe: redirectUnauthorizedToUnauthorized}
+    ...canActivate(redirectUnauthorizedToUnauthorized)
   },
   {
     path: 'create/:id',
     component: CreateNewsComponent,
-    canActivate: [AngularFireAuthGuard],
-    data: {authGuardPipe: redirectUnauthorizedToUnauthorized}
+    ...canActivate(redirectUnauthorizedToUnauthorized)
   },
   {path: 'news/:id', component: NewsDetailComponent},
   {path: 'unauthorized', component: NotAuthorizedComponent},
