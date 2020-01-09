@@ -60,19 +60,19 @@ export class FirestoreService {
     return newsItem;
   }
 
-  public async createNewsDoc(item: News): Promise<string> {
+  public async createNews(item: News): Promise<string> {
     const res = await this._newsCollection.add(item);
 
     return res.id;
   }
 
-  public updateDoc(item: News): void {
+  public updateNews(item: Partial<News>): void {
     this.getNewsDoc(item.id).update(item);
 
     this.initializeNews();
   }
 
-  public removeDoc(id: string): void {
+  public removeNews(id: string): void {
     this.getNewsDoc(id).delete();
 
     this._newsDocs.delete(id);
@@ -118,11 +118,11 @@ export class FirestoreService {
     return {newsDoc, newsItem};
   }
 
-  public getUserDoc(id: string): Observable<User> {
+  public getUser(id: string): Observable<User> {
     return this._usersCollection.doc<User>(id).valueChanges();
   }
 
-  public async createUsersDoc(id: string, user: User): Promise<void> {
+  public async createUser(id: string, user: User): Promise<void> {
     await this._usersCollection.doc<User>(id).set(user);
   }
 }

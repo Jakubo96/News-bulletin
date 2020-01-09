@@ -4,13 +4,15 @@ export interface Roles {
 }
 
 export class User {
+  public id: string;
   public email: string;
-  public displayName: string;
+  public name: string;
   public roles: Roles;
 
   constructor(authData: firebase.User) {
+    this.id = authData.uid;
     this.email = authData.email;
-    this.displayName = authData.displayName;
+    this.name = authData.displayName;
     this.roles = {author: true};
   }
 }

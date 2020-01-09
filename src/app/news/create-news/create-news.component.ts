@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 
 @Component({
   selector: 'app-create-news',
@@ -31,6 +32,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private firestoreService: FirestoreService,
+              private firebaseAuth: FirebaseAuthService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -70,12 +72,21 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
   public async onSubmit(): Promise<void> {
     if (!this.newsId) {
       const docId = await this.firestoreService
-        .createNewsDoc({content: this.content.value, title: this.title.value, imagesUrls: this.imagesUrls});
+        .createNews({
+          content: this.content.value,
+          title: this.title.value,
+          imagesUrls: this.imagesUrls,
+          author: {
+            id: this.firebaseAuth.user.value.id,
+            name: this.firebaseAuth.user.value.name,
+            email: this.firebaseAuth.user.value.email
+          }
+        });
 
       this.router.navigate(['/news', docId]);
     } else {
       await this.firestoreService
-        .updateDoc({
+        .updateNews({
           content: this.content.value,
           title: this.title.value,
           imagesUrls: this.imagesUrls,

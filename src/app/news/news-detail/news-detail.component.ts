@@ -29,7 +29,7 @@ export class NewsDetailComponent implements OnInit {
   }
 
   public deleteDocument(): void {
-    this.firestoreService.removeDoc(this.newsId);
+    this.firestoreService.removeNews(this.newsId);
 
     this.router.navigate(['/news']);
   }

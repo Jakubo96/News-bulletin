@@ -14,7 +14,7 @@ export class FirebaseAuthService implements OnDestroy {
   private _user: BehaviorSubject<User> = new BehaviorSubject(null);
   private unsubscribe$ = new Subject();
 
-  get user(): Observable<User> {
+  get user(): BehaviorSubject<User> {
     return this._user;
   }
 
@@ -23,7 +23,7 @@ export class FirebaseAuthService implements OnDestroy {
     this.afAuth.user
       .pipe(
         switchMap(user => user ?
-          this.firestoreService.getUserDoc(user.uid) :
+          this.firestoreService.getUser(user.uid) :
           of(null)),
         takeUntil(this.unsubscribe$))
       .subscribe(user => this._user.next(user));
@@ -65,13 +65,13 @@ export class FirebaseAuthService implements OnDestroy {
 
   private createUserDoc(authData: firebase.User): void {
     const userData = {...new User(authData)};
-    const doc = this.firestoreService.getUserDoc(authData.uid);
+    const doc = this.firestoreService.getUser(authData.uid);
 
     doc
       .pipe(take(1), takeUntil(this.unsubscribe$))
       .subscribe(user => {
         if (!user) {
-          this.firestoreService.createUsersDoc(authData.uid, userData);
+          this.firestoreService.createUser(authData.uid, userData);
         }
       });
   }
