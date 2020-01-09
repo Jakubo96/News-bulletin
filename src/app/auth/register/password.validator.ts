@@ -1,8 +1,8 @@
 import { AbstractControl } from '@angular/forms';
 
-export class PasswordValidation {
+export class PasswordValidator {
 
-  public static matchPassword(control: AbstractControl): { isEqual: boolean } {
+  public static matchPasswords(control: AbstractControl): { isEqual: boolean } {
     if (control.get('password').value === control.get('repeatedPassword').value) {
       return null;
     } else {

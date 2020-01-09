@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PasswordValidation } from '@app/auth/register/password-validation';
+import { PasswordValidator } from '@app/auth/register/password.validator';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 
 @Component({
@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       repeatedPassword: ['']
     }, {
-      validator: PasswordValidation.matchPassword
+      validator: PasswordValidator.matchPasswords
     });
   }
 
