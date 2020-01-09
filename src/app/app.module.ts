@@ -18,6 +18,8 @@ import { ImagesCarouselComponent } from './images-carousel/images-carousel.compo
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { NotAuthorizedComponent } from './auth/not-authorized/not-authorized.component';
+import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { RegisterComponent } from './auth/register/register.component';
     CreateNewsComponent,
     ImagesCarouselComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    NotAuthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,7 @@ import { RegisterComponent } from './auth/register/register.component';
     AngularFireStorageModule,
     AngularFireAuthModule
   ],
-  providers: [],
+  providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
