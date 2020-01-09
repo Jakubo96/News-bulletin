@@ -4,8 +4,9 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
 import { Subject } from 'rxjs';
-import { finalize, takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil, tap } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { User } from '@app/auth/user';
 
 @Component({
   selector: 'app-create-news',
@@ -116,6 +117,11 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
 
     this.firestoreService.getNewsItem(this.newsId)
       .pipe(
+        tap(news => {
+          if (!this.canUserModifyThisNews(news.author)) {
+            this.router.navigate(['/unauthorized']);
+          }
+        }),
         takeUntil(this.unsubscribe$)
       )
       .subscribe(newsItem => {
@@ -123,5 +129,11 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
         this.content.setValue(newsItem.content);
         this.imagesUrls = newsItem.imagesUrls;
       });
+  }
+
+  private canUserModifyThisNews(author: Partial<User>): boolean {
+    const loggedInUser = this.firebaseAuth.user.value;
+
+    return loggedInUser.roles.author && author.id === loggedInUser.id || loggedInUser.roles.admin;
   }
 }
