@@ -28,9 +28,13 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    return this.firebaseAuth.user.pipe(
-      map(user => (user && user.roles.author ? true : this.accessDeniedUrlTree))
-    );
+    if (routeConfig.accessAllowedTo) {
+      return this.firebaseAuth.user.pipe(
+        map(user => (user && user.roles[routeConfig.accessAllowedTo] ? true : this.accessDeniedUrlTree))
+      );
+    }
+
+    return this.accessDeniedUrlTree;
   }
 }
 

@@ -9,6 +9,7 @@ import { RegisterComponent } from '@app/auth/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 import { AuthGuard } from '@app/auth/auth-guard.service';
 import { AuthorizedRoutes } from '@app/auth/authorized-route';
+import { Role } from '@app/auth/role.enum';
 
 const routes: AuthorizedRoutes = [
   {
@@ -29,12 +30,14 @@ const routes: AuthorizedRoutes = [
   {
     path: 'create',
     component: CreateNewsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    accessAllowedTo: Role.AUTHOR
   },
   {
     path: 'create/:id',
     component: CreateNewsComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    accessAllowedTo: Role.AUTHOR
   },
   {
     path: 'news/:id', component: NewsDetailComponent,
