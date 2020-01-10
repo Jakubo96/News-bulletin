@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 )
 export class WindowService {
 
-  get windowRef() {
+  get windowRef(): any {
     return window;
   }
 }

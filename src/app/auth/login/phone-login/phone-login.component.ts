@@ -4,6 +4,7 @@ import { auth } from 'firebase';
 import { WindowService } from '@app/auth/login/phone-login/window.service';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 export class PhoneNumber {
   country: string;
@@ -26,32 +27,31 @@ export class PhoneNumber {
 })
 export class PhoneLoginComponent implements OnInit {
 
-  windowRef: any;
+  public windowRef: any;
 
-  phoneNumber = new PhoneNumber();
+  public phoneNumberControl: FormControl;
+  public verificationCodeControl: FormControl;
 
-  verificationCode: string;
+  public confirmationResult: auth.ConfirmationResult;
 
-  confirmationResult: auth.ConfirmationResult;
-
-  constructor(private win: WindowService, private firebaseAuth: FirebaseAuthService, private router: Router) {
+  constructor(private win: WindowService, private firebaseAuth: FirebaseAuthService,
+              private router: Router, private fb: FormBuilder) {
   }
 
   ngOnInit() {
     this.setupRecaptchaVerifier();
+    this.buildForm();
   }
 
 
   public async sendLoginCode(): Promise<void> {
-    const appVerifier = this.windowRef.recaptchaVerifier;
-    const num = this.phoneNumber.e164;
-
-    this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(num, appVerifier);
+    this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(this.phoneNumberControl.value,
+      this.windowRef.recaptchaVerifier);
   }
 
   public async verifyLoginCode(): Promise<void> {
     const credential = auth.PhoneAuthProvider
-      .credential(this.confirmationResult.verificationId, this.verificationCode);
+      .credential(this.confirmationResult.verificationId, this.verificationCodeControl.value);
 
     await this.firebaseAuth.loginWithCredentials(credential);
 
@@ -63,5 +63,10 @@ export class PhoneLoginComponent implements OnInit {
     this.windowRef.recaptchaVerifier = this.firebaseAuth.getRecaptchaVerifier('recaptcha-container');
 
     this.windowRef.recaptchaWidgetId = await this.windowRef.recaptchaVerifier.render();
+  }
+
+  private buildForm() {
+    this.phoneNumberControl = this.fb.control('', Validators.required);
+    this.verificationCodeControl = this.fb.control('', Validators.required);
   }
 }

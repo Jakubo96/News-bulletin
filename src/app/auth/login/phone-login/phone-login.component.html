@@ -1,27 +1,24 @@
-<div>
+<div class="container">
 
   <h1>Sign In with Your Phone Number</h1>
   <div [hidden]="confirmationResult">
-    <label for="phone">Phone Number</label><br>
-    <input type="text" [(ngModel)]="phoneNumber.country" class="input" placeholder="1" maxlength="3">
-    <input type="text" [(ngModel)]="phoneNumber.area" class="input" placeholder="949" maxlength="3">
-    <input type="text" [(ngModel)]="phoneNumber.prefix" class="input" placeholder="555" maxlength="3">
-    <input type="text" [(ngModel)]="phoneNumber.line" class="input" placeholder="5555" maxlength="4">
+    <label>Phone Number</label><br>
+    <input type="text" [formControl]="phoneNumberControl" placeholder="(+48) 509-804-196">
 
     <hr>
 
     <div id="recaptcha-container"></div>
 
     <hr>
-    <button class="button is-info" (click)="sendLoginCode()">SMS Text Login Code</button>
+    <button class="btn btn-primary" (click)="sendLoginCode()">SMS Text Login Code</button>
   </div>
 
   <div *ngIf="confirmationResult">
     <hr>
-    <label for="code">Enter your Verification Code Here</label><br>
-    <input type="text" name="code" [(ngModel)]="verificationCode" class="input">
+    <label>Enter your Verification Code Here</label><br>
+    <input type="text" [formControl]="verificationCodeControl">
 
-    <button class="button is-success" (click)="verifyLoginCode()">Verify</button>
+    <button class="btn btn-primary" (click)="verifyLoginCode()">Verify</button>
   </div>
 
 </div>
