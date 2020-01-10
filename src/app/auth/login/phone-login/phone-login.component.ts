@@ -4,21 +4,7 @@ import { auth } from 'firebase';
 import { WindowService } from '@app/auth/login/phone-login/window.service';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
-
-export class PhoneNumber {
-  country: string;
-  area: string;
-  prefix: string;
-  line: string;
-
-  // format phone numbers as E.164
-  get e164() {
-    const num = this.country + this.area + this.prefix + this.line;
-    return `+${num}`;
-  }
-
-}
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-phone-login',
@@ -29,7 +15,7 @@ export class PhoneLoginComponent implements OnInit {
 
   public windowRef: any;
 
-  public phoneNumberControl: FormControl;
+  public phoneGroup: FormGroup;
   public verificationCodeControl: FormControl;
 
   public confirmationResult: auth.ConfirmationResult;
@@ -45,7 +31,9 @@ export class PhoneLoginComponent implements OnInit {
 
 
   public async sendLoginCode(): Promise<void> {
-    this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(this.phoneNumberControl.value,
+    const phoneNumber = this.obtainPhoneNumber();
+
+    this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(phoneNumber,
       this.windowRef.recaptchaVerifier);
   }
 
@@ -66,7 +54,19 @@ export class PhoneLoginComponent implements OnInit {
   }
 
   private buildForm() {
-    this.phoneNumberControl = this.fb.control('', Validators.required);
-    this.verificationCodeControl = this.fb.control('', Validators.required);
+    this.phoneGroup = this.fb.group({
+      prefix: ['+48', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      first: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      second: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      third: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
+    });
+
+    this.verificationCodeControl = this.fb.control('',
+      [Validators.required, Validators.minLength(6), Validators.maxLength(6)]);
+  }
+
+  private obtainPhoneNumber(): string {
+    return this.phoneGroup.get('prefix').value + this.phoneGroup.get('first').value +
+      this.phoneGroup.get('second').value + this.phoneGroup.get('third').value;
   }
 }

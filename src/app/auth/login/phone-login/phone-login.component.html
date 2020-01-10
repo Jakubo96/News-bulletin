@@ -1,24 +1,48 @@
-<div class="container">
-
+<div class="container mb-5">
   <h1>Sign In with Your Phone Number</h1>
-  <div [hidden]="confirmationResult">
-    <label>Phone Number</label><br>
-    <input type="text" [formControl]="phoneNumberControl" placeholder="(+48) 509-804-196">
 
+  <form [formGroup]="phoneGroup" (ngSubmit)="sendLoginCode()" class="mt-4">
+    <div class="form-group">
+      <label>
+        <input class="form-control" type="text" formControlName="prefix" placeholder="+48">
+      </label>
+    </div>
+    <div class="form-group">
+      <h5 class="mx-3 d-inline">-</h5>
+      <label>
+        <input class="form-control" type="number" formControlName="first" placeholder="123">
+      </label>
+    </div>
+    <div class="form-group">
+      <h5 class="mx-3 d-inline">-</h5>
+      <label>
+        <input class="form-control" type="number" formControlName="second" placeholder="456">
+      </label>
+    </div>
+    <div class="form-group">
+      <h5 class="mx-3 d-inline">-</h5>
+      <label>
+        <input class="form-control" type="number" formControlName="third" placeholder="789">
+      </label>
+    </div>
     <hr>
-
     <div id="recaptcha-container"></div>
-
     <hr>
-    <button class="btn btn-primary" (click)="sendLoginCode()">SMS Text Login Code</button>
-  </div>
+    <button [disabled]="!phoneGroup.valid" class="btn btn-primary" type="submit">Send SMS code
+    </button>
+  </form>
 
-  <div *ngIf="confirmationResult">
+  <div [ngClass]="{disabled: !confirmationResult}">
     <hr>
-    <label>Enter your Verification Code Here</label><br>
-    <input type="text" [formControl]="verificationCodeControl">
-
-    <button class="btn btn-primary" (click)="verifyLoginCode()">Verify</button>
+    <div class="form-group">
+      <label>
+        Enter your Verification Code Here:
+        <input [attr.disabled]="!confirmationResult ? true: null" class="ml-3 mt-2 form-control" type="text"
+               [formControl]="verificationCodeControl" placeholder="123456">
+      </label>
+    </div>
+    <hr>
+    <button [disabled]="!verificationCodeControl.valid" class="btn btn-primary" (click)="verifyLoginCode()">Login
+    </button>
   </div>
-
 </div>
