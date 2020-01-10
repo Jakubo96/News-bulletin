@@ -10,6 +10,7 @@ import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.
 import { AuthGuard } from '@app/auth/auth-guard.service';
 import { AuthorizedRoutes } from '@app/auth/authorized-route';
 import { Role } from '@app/auth/role.enum';
+import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
 
 const routes: AuthorizedRoutes = [
   {
@@ -19,6 +20,11 @@ const routes: AuthorizedRoutes = [
   },
   {
     path: 'login', component: LoginComponent,
+    canActivate: [AuthGuard],
+    permitAll: true
+  },
+  {
+    path: 'phone-login', component: PhoneLoginComponent,
     canActivate: [AuthGuard],
     permitAll: true
   },

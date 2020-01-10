@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from '@environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -20,6 +20,7 @@ import { ImagesCarouselComponent } from '@app/images-carousel/images-carousel.co
 import { LoginComponent } from '@app/auth/login/login.component';
 import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
+import { PhoneLoginComponent } from './auth/login/phone-login/phone-login.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.
     LoginComponent,
     RegisterComponent,
     NotAuthorizedComponent,
-    IsCreatorOrAdminDirective
+    IsCreatorOrAdminDirective,
+    PhoneLoginComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +44,7 @@ import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     ReactiveFormsModule,
+    FormsModule,
     NgxFileDropModule,
     AngularFireStorageModule,
     AngularFireAuthModule
