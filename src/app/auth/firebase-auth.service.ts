@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { User } from '@app/auth/user';
 import { auth } from 'firebase';
@@ -55,6 +55,12 @@ export class FirebaseAuthService implements OnDestroy {
 
   public async loginWithFacebook(): Promise<void> {
     const credentials = await this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider());
+
+    this.createUserDoc(credentials.user);
+  }
+
+  public async loginWithGithub(): Promise<void> {
+    const credentials = await this.afAuth.auth.signInWithPopup(new auth.GithubAuthProvider());
 
     this.createUserDoc(credentials.user);
   }

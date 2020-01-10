@@ -42,6 +42,11 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/news']);
   }
 
+  public async loginWithGithub(): Promise<void> {
+    await this.firebaseAuth.loginWithGithub();
+    this.router.navigate(['/news']);
+  }
+
   private buildForm(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
