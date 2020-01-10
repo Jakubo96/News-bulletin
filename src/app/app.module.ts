@@ -19,7 +19,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { NotAuthorizedComponent } from './auth/not-authorized/not-authorized.component';
-import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
 
 @NgModule({
   declarations: [
@@ -45,7 +44,6 @@ import { AngularFireAuthGuard } from '@angular/fire/auth-guard';
     AngularFireStorageModule,
     AngularFireAuthModule
   ],
-  providers: [AngularFireAuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
