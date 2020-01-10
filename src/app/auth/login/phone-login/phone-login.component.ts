@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import * as firebase from 'firebase';
+import { auth } from 'firebase';
 import { WindowService } from '@app/auth/login/phone-login/window.service';
+import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { Router } from '@angular/router';
 
 export class PhoneNumber {
   country: string;
@@ -30,51 +32,36 @@ export class PhoneLoginComponent implements OnInit {
 
   verificationCode: string;
 
-  user: any;
+  confirmationResult: auth.ConfirmationResult;
 
-  constructor(private win: WindowService) {
+  constructor(private win: WindowService, private firebaseAuth: FirebaseAuthService, private router: Router) {
   }
 
   ngOnInit() {
-    this.windowRef = this.win.windowRef;
-    this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
-
-    this.windowRef.recaptchaVerifier
-      .render()
-      .then(widgetId => {
-
-        this.windowRef.recaptchaWidgetId = widgetId;
-      });
+    this.setupRecaptchaVerifier();
   }
 
 
-  sendLoginCode() {
-
+  public async sendLoginCode(): Promise<void> {
     const appVerifier = this.windowRef.recaptchaVerifier;
-
     const num = this.phoneNumber.e164;
 
-    firebase.auth()
-      .signInWithPhoneNumber(num, appVerifier)
-      .then(result => {
-
-        this.windowRef.confirmationResult = result;
-
-      })
-      .catch(error => console.log(error));
-
+    this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(num, appVerifier);
   }
 
-  verifyLoginCode() {
-    this.windowRef.confirmationResult
-      .confirm(this.verificationCode)
-      .then(result => {
+  public async verifyLoginCode(): Promise<void> {
+    const credential = auth.PhoneAuthProvider
+      .credential(this.confirmationResult.verificationId, this.verificationCode);
 
-        this.user = result.user;
+    await this.firebaseAuth.loginWithCredentials(credential);
 
-      })
-      .catch(error => console.log(error, 'Incorrect code entered?'));
+    this.router.navigate(['/news']);
   }
 
+  private async setupRecaptchaVerifier(): Promise<void> {
+    this.windowRef = this.win.windowRef;
+    this.windowRef.recaptchaVerifier = this.firebaseAuth.getRecaptchaVerifier('recaptcha-container');
 
+    this.windowRef.recaptchaWidgetId = await this.windowRef.recaptchaVerifier.render();
+  }
 }

@@ -5,6 +5,7 @@ import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { User } from '@app/auth/user';
 import { auth } from 'firebase';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
+import ApplicationVerifier = firebase.auth.ApplicationVerifier;
 
 @Injectable({
   providedIn: 'root'
@@ -63,6 +64,21 @@ export class FirebaseAuthService implements OnDestroy {
     const credentials = await this.afAuth.auth.signInWithPopup(new auth.GithubAuthProvider());
 
     this.createUserDoc(credentials.user);
+  }
+
+  public async loginWithCredentials(credential: auth.AuthCredential): Promise<void> {
+    const credentials = await this.afAuth.auth.signInWithCredential(credential);
+
+    await this.createUserDoc(credentials.user);
+  }
+
+  public loginWithPhoneNumber(number: string,
+                              appVerifier: ApplicationVerifier): Promise<auth.ConfirmationResult> {
+    return this.afAuth.auth.signInWithPhoneNumber(number, appVerifier);
+  }
+
+  public getRecaptchaVerifier(containerId: string): ApplicationVerifier {
+    return new auth.RecaptchaVerifier(containerId);
   }
 
   public async logout(): Promise<void> {
