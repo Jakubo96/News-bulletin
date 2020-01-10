@@ -10,15 +10,16 @@ import { AppComponent } from '@app/app.component';
 import { HeaderComponent } from '@app/header/header.component';
 import { NewsListComponent } from '@app/news/news-list/news-list.component';
 import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.component';
-import { NewsDetailComponent } from './news/news-detail/news-detail.component';
-import { CreateNewsComponent } from './news/create-news/create-news.component';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { ImagesCarouselComponent } from './images-carousel/images-carousel.component';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { NotAuthorizedComponent } from './auth/not-authorized/not-authorized.component';
+import { IsCreatorOrAdminDirective } from '@app/auth/is-creator-or-admin.directive';
+import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component';
+import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
+import { ImagesCarouselComponent } from '@app/images-carousel/images-carousel.component';
+import { LoginComponent } from '@app/auth/login/login.component';
+import { RegisterComponent } from '@app/auth/register/register.component';
+import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NotAuthorizedComponent } from './auth/not-authorized/not-authorized.com
     ImagesCarouselComponent,
     LoginComponent,
     RegisterComponent,
-    NotAuthorizedComponent
+    NotAuthorizedComponent,
+    IsCreatorOrAdminDirective
   ],
   imports: [
     BrowserModule,
