@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PasswordValidator } from '@app/auth/register/password.validator';
+import { PasswordValidator } from '@app/auth/login/register/password.validator';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 
 @Component({

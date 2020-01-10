@@ -18,7 +18,7 @@ import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component
 import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
 import { ImagesCarouselComponent } from '@app/images-carousel/images-carousel.component';
 import { LoginComponent } from '@app/auth/login/login.component';
-import { RegisterComponent } from '@app/auth/register/register.component';
+import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 
 @NgModule({

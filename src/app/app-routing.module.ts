@@ -5,7 +5,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component';
 import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
 import { LoginComponent } from '@app/auth/login/login.component';
-import { RegisterComponent } from '@app/auth/register/register.component';
+import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 import { AuthGuard } from '@app/auth/auth-guard.service';
 import { AuthorizedRoutes } from '@app/auth/authorized-route';
