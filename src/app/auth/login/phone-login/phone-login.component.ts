@@ -55,10 +55,14 @@ export class PhoneLoginComponent implements OnInit {
 
   private buildForm() {
     this.phoneGroup = this.fb.group({
-      prefix: ['+48', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
-      first: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
-      second: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
-      third: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]]
+      prefix: ['+48', [Validators.required, Validators.minLength(3), Validators.maxLength(3),
+        Validators.pattern('[0-9+]*')]],
+      first: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3),
+        Validators.pattern('[0-9]*')]],
+      second: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3),
+        Validators.pattern('[0-9]*')]],
+      third: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3),
+        Validators.pattern('[0-9]*')]]
     });
 
     this.verificationCodeControl = this.fb.control('',
