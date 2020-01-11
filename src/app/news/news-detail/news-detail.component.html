@@ -8,7 +8,7 @@
   <div class="row">
     <div class="col-2"></div>
     <div class="col-8">
-      <p>{{ newsItem.content }}</p>
+      <p class="text-break">{{ newsItem.content }}</p>
     </div>
   </div>
 
@@ -34,6 +34,14 @@
     </div>
     <div class="col-8">
       <app-images-carousel [imagesUrls]="newsItem.imagesUrls"></app-images-carousel>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col">
+      <div class="fb-comments" [attr.data-href]="'https:/jakubo96.github.io/news/' + newsItem.id" data-width=""
+           data-numposts="5"></div>
     </div>
   </div>
 </div>

@@ -8,6 +8,18 @@
   <link href="favicon.ico" rel="icon" type="image/x-icon">
 </head>
 <body>
+<div id="fb-root"></div>
+<script async defer src="https://connect.facebook.net/en_US/sdk.js"></script>
+<script>
+  window.fbAsyncInit = function () {
+    FB.init({
+      appId: '2466358103681405',
+      autoLogAppEvents: true,
+      xfbml: true,
+      version: 'v5.0'
+    });
+  };
+</script>
 <app-root></app-root>
 </body>
 </html>
