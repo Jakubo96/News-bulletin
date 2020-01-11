@@ -25,6 +25,10 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
     this.loadProductDetails();
   }
 
+  ngAfterViewChecked(): void {
+    this.windowService.windowRef.FB.XFBML.parse();
+  }
+
   private loadProductDetails(): void {
     this.newsId = this.route.snapshot.paramMap.get('id');
     this.newsItem$ = this.firestoreService.getNewsItem(this.newsId);
@@ -36,11 +40,7 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
     this.router.navigate(['/news']);
   }
 
-  editDocument(): void {
+  public editDocument(): void {
     this.router.navigate(['/create', this.newsId]);
-  }
-
-  ngAfterViewChecked(): void {
-    this.windowService.windowRef.FB.XFBML.parse();
   }
 }

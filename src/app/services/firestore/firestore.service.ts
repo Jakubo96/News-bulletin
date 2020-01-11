@@ -45,6 +45,20 @@ export class FirestoreService {
     );
   }
 
+  public getNewsForGivenUser(userId: string): Observable<News[]> {
+    const newsCollection = this.afs.collection<News>(FirestoreCollections.NEWS,
+      ref => ref.where('author.id', '==', userId));
+
+    return newsCollection.snapshotChanges().pipe(
+      map(actions => actions.map(a => {
+        const data = a.payload.doc.data() as News;
+        const id = a.payload.doc.id;
+
+        return {id, ...data};
+      }))
+    );
+  }
+
   private initializeUsers(): void {
     this._usersCollection = this.afs.collection<User>(FirestoreCollections.USERS);
   }

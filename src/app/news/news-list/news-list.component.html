@@ -1,4 +1,9 @@
 <div class="container mb-5">
+  <div class="row mb-4" *ngIf="user$ | async as user">
+    <div class="col">
+      <h1>Posts of user: {{ user.name ? user.name : user.email ? user.email : user.id }}</h1>
+    </div>
+  </div>
   <ng-container *ngIf="newsList$ | async as newsList">
     <div class="row" *ngIf="newsList.length else noNews">
       <div class="col-4 mb-4" *ngFor="let news of newsList">

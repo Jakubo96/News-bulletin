@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
-  <a class="navbar-brand" routerLink="news">News bulletin</a>
+  <a class="navbar-brand" routerLink="/news">News bulletin</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
           aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,13 +7,14 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="create">Create news</a>
+        <a class="nav-link" routerLink="/create">Create news</a>
       </li>
     </ul>
     <div class="d-flex" *ngIf="firebaseAuth.user | async as user; else login">
-      <span class="navbar-text">
+      <button class="btn btn-link" routerLink="/news"
+            [queryParams]="{userId: user.id}">
         {{ user.name ? user.name : user.email ? user.email : user.id }}
-      </span>
+      </button>
       <button class="btn btn-danger ml-4" (click)="logout()">
         Logout
       </button>
