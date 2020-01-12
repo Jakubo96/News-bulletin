@@ -82,8 +82,8 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
             name: this.firebaseAuth.user.value.name,
             email: this.firebaseAuth.user.value.email
           },
-          modified: new Date(),
-          created: new Date()
+          modified: Date.now(),
+          created: Date.now()
         });
 
       this.router.navigate(['/news', docId]);
@@ -94,7 +94,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
           title: this.title.value,
           imagesUrls: this.imagesUrls,
           id: this.newsId,
-          modified: new Date()
+          modified: Date.now()
         });
 
       this.router.navigate(['/news', this.newsId]);

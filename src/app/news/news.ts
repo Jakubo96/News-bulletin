@@ -6,6 +6,6 @@ export interface News {
   content: string;
   imagesUrls: string[];
   author: Partial<User>;
-  created: Date;
-  modified: Date;
+  created: number;
+  modified: number;
 }

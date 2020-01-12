@@ -43,4 +43,8 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
   public editDocument(): void {
     this.router.navigate(['/create', this.newsId]);
   }
+
+  public getDate(created: number): Date {
+    return new Date(created);
+  }
 }
