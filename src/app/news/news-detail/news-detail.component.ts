@@ -4,6 +4,7 @@ import { News } from '@app/news/news';
 import { Observable } from 'rxjs';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { WindowService } from '@app/auth/login/phone-login/window.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-news-detail',
@@ -16,7 +17,7 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
   public newsItem$: Observable<News>;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
+              private router: Router, private toastr: ToastrService,
               private firestoreService: FirestoreService,
               private windowService: WindowService) {
   }
@@ -37,6 +38,7 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
   public deleteDocument(): void {
     this.firestoreService.removeNews(this.newsId);
 
+    this.toastr.error(null, 'News removed');
     this.router.navigate(['/news']);
   }
 

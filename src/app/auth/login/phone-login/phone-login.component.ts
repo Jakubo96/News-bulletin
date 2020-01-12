@@ -5,6 +5,7 @@ import { WindowService } from '@app/auth/login/phone-login/window.service';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-phone-login',
@@ -21,7 +22,7 @@ export class PhoneLoginComponent implements OnInit {
   public confirmationResult: auth.ConfirmationResult;
 
   constructor(private win: WindowService, private firebaseAuth: FirebaseAuthService,
-              private router: Router, private fb: FormBuilder) {
+              private router: Router, private fb: FormBuilder, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -35,6 +36,8 @@ export class PhoneLoginComponent implements OnInit {
 
     this.confirmationResult = await this.firebaseAuth.loginWithPhoneNumber(phoneNumber,
       this.windowRef.recaptchaVerifier);
+
+    this.toastr.success(null, 'Confirmation code sent');
   }
 
   public async verifyLoginCode(): Promise<void> {
@@ -43,6 +46,7 @@ export class PhoneLoginComponent implements OnInit {
 
     await this.firebaseAuth.loginWithCredentials(credential);
 
+    this.toastr.success(null, 'Logged in with phone');
     this.router.navigate(['/news']);
   }
 

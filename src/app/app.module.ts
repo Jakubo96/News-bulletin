@@ -24,6 +24,8 @@ import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.com
 import { ManageUsersComponent } from '@app/auth/manage-users/manage-users.component';
 import { IsAdminDirective } from '@app/auth/is-admin.directive';
 import { EditUserComponent } from '@app/edit-user/edit-user.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { EditUserComponent } from '@app/edit-user/edit-user.component';
     ReactiveFormsModule,
     NgxFileDropModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   bootstrap: [AppComponent]
 })

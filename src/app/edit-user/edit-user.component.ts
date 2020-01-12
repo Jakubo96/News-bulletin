@@ -6,6 +6,7 @@ import { User } from '@app/auth/user';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-user',
@@ -36,7 +37,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     return this.userGroup.get('admin');
   }
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute,
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService,
               private firestoreService: FirestoreService, private firebaseAuth: FirebaseAuthService) {
   }
 
@@ -81,5 +82,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     } else {
       this.firestoreService.updateUser({name: this.name.value, email: this.email.value, id: this.userId});
     }
+
+    this.toastr.success(null, 'User updated');
   }
 }
