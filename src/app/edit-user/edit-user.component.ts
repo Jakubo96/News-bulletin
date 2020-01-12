@@ -5,6 +5,7 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { User } from '@app/auth/user';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
 
 @Component({
   selector: 'app-edit-user',
@@ -13,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class EditUserComponent implements OnInit, OnDestroy {
 
-  public user: User;
+  public editedUser: User;
   public userGroup: FormGroup;
   public userId: string;
 
@@ -27,12 +28,20 @@ export class EditUserComponent implements OnInit, OnDestroy {
     return this.userGroup.get('email');
   }
 
+  get author(): AbstractControl {
+    return this.userGroup.get('author');
+  }
+
+  get admin(): AbstractControl {
+    return this.userGroup.get('admin');
+  }
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-              private firestoreService: FirestoreService) {
+              private firestoreService: FirestoreService, private firebaseAuth: FirebaseAuthService) {
   }
 
   ngOnInit() {
-    this.loadUser();
+    this.loadEditedUser();
   }
 
   ngOnDestroy(): void {
@@ -40,26 +49,37 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  private loadUser(): void {
+  private loadEditedUser(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getUser(this.userId)
       .pipe(
         takeUntil(this.unsubscribe$)
       )
       .subscribe(user => {
-        this.user = user;
+        this.editedUser = user;
         this.buildForm();
       });
   }
 
   private buildForm(): void {
     this.userGroup = this.fb.group({
-      name: [this.user.name || '', Validators.required],
-      email: [this.user.email || '', [Validators.required, Validators.email]],
+      name: this.editedUser.name || '',
+      email: [this.editedUser.email || '', Validators.email],
+      author: this.editedUser.roles.author,
+      admin: this.editedUser.roles.admin,
     });
   }
 
   public onSubmit(): void {
-    this.firestoreService.updateUser({name: this.name.value, email: this.email.value, id: this.userId});
+    if (this.firebaseAuth.user.value.roles.admin) {
+      this.firestoreService.updateUser({
+        name: this.name.value,
+        email: this.email.value,
+        id: this.userId,
+        roles: {author: this.author.value, admin: this.admin.value}
+      });
+    } else {
+      this.firestoreService.updateUser({name: this.name.value, email: this.email.value, id: this.userId});
+    }
   }
 }

@@ -3,9 +3,9 @@
     <div class="col-2">
     </div>
     <div class="col-8" *ngIf="userGroup">
-      <h4 class="mb-3 d-inline">Edit: </h4><a class="font-weight-bold" routerLink="/news"
-                                              [queryParams]="{userId: user.id}">{{ user.name ? user.name : user.email ? user.email : user.id }}</a>
-      <form [formGroup]="userGroup" (ngSubmit)="onSubmit()" class="w-50">
+      <h3 class="d-inline">Edit: </h3><a class="font-weight-bold" routerLink="/news"
+                                              [queryParams]="{userId: editedUser.id}">{{ editedUser.name ? editedUser.name : editedUser.email ? editedUser.email : editedUser.id }}</a>
+      <form [formGroup]="userGroup" (ngSubmit)="onSubmit()" class="w-50 mt-3">
         <div class="form-group">
           <label>Name</label>
           <input type="text" class="form-control" formControlName="name">
@@ -14,6 +14,23 @@
         <div class="form-group">
           <label>Email</label>
           <input type="text" class="form-control" formControlName="email">
+        </div>
+
+        <div class="mb-3" *appIsAdmin>
+          <h4>Roles</h4>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" formControlName="author">
+              Author
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" formControlName="admin">
+              Admin
+            </label>
+          </div>
         </div>
 
         <button [disabled]="!userGroup.valid" type="submit"
