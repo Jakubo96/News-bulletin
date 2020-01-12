@@ -118,7 +118,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.firestoreService.getNewsItem(this.newsId)
+    this.firestoreService.getNews(this.newsId)
       .pipe(
         tap(news => {
           if (!this.canUserModifyThisNews(news.author)) {

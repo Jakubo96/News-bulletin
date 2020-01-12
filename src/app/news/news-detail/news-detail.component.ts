@@ -31,7 +31,7 @@ export class NewsDetailComponent implements OnInit, AfterViewChecked {
 
   private loadProductDetails(): void {
     this.newsId = this.route.snapshot.paramMap.get('id');
-    this.newsItem$ = this.firestoreService.getNewsItem(this.newsId);
+    this.newsItem$ = this.firestoreService.getNews(this.newsId);
   }
 
   public deleteDocument(): void {

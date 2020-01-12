@@ -63,7 +63,7 @@ export class FirestoreService {
     this._usersList$ = this._usersCollection.valueChanges();
   }
 
-  public getNewsItem(id: string): Observable<News> {
+  public getNews(id: string): Observable<News> {
     if (this._newsItems$.has(id)) {
       return this._newsItems$.get(id);
     }
@@ -133,10 +133,18 @@ export class FirestoreService {
   }
 
   public getUser(id: string): Observable<User> {
-    return this._usersCollection.doc<User>(id).valueChanges();
+    return this.getUserDoc(id).valueChanges();
+  }
+
+  private getUserDoc(id: string): AngularFirestoreDocument<User> {
+    return this._usersCollection.doc<User>(id);
   }
 
   public async createUser(id: string, user: User): Promise<void> {
     await this._usersCollection.doc<User>(id).set(user);
+  }
+
+  public updateUser(item: Partial<User>): void {
+    this.getUserDoc(item.id).update(item);
   }
 }
