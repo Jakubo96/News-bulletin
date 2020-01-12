@@ -20,9 +20,10 @@ import { ImagesCarouselComponent } from '@app/images-carousel/images-carousel.co
 import { LoginComponent } from '@app/auth/login/login.component';
 import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
-import { PhoneLoginComponent } from './auth/login/phone-login/phone-login.component';
-import { ManageUsersComponent } from './auth/manage-users/manage-users.component';
-import { IsAdminDirective } from './auth/is-admin.directive';
+import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
+import { ManageUsersComponent } from '@app/auth/manage-users/manage-users.component';
+import { IsAdminDirective } from '@app/auth/is-admin.directive';
+import { EditUserComponent } from '@app/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { IsAdminDirective } from './auth/is-admin.directive';
     IsCreatorOrAdminDirective,
     PhoneLoginComponent,
     ManageUsersComponent,
-    IsAdminDirective
+    IsAdminDirective,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

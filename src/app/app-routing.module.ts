@@ -12,6 +12,7 @@ import { AuthorizedRoutes } from '@app/auth/authorized-route';
 import { Role } from '@app/auth/role.enum';
 import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
 import { ManageUsersComponent } from '@app/auth/manage-users/manage-users.component';
+import { EditUserComponent } from '@app/edit-user/edit-user.component';
 
 const routes: AuthorizedRoutes = [
   {
@@ -51,6 +52,12 @@ const routes: AuthorizedRoutes = [
     component: ManageUsersComponent,
     canActivate: [AuthGuard],
     accessAllowedTo: Role.ADMIN
+  },
+  {
+    path: 'users/:id',
+    component: EditUserComponent,
+    canActivate: [AuthGuard],
+    thisUserOrAdmin: true
   },
   {
     path: 'news/:id', component: NewsDetailComponent,

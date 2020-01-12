@@ -14,8 +14,7 @@
       </li>
     </ul>
     <div class="d-flex" *ngIf="firebaseAuth.user | async as user; else login">
-      <button class="btn btn-link" routerLink="/news"
-              [queryParams]="{userId: user.id}">
+      <button class="btn btn-link" [routerLink]="'/users/' + user.id">
         {{ user.name ? user.name : user.email ? user.email : user.id }}
       </button>
       <button class="btn btn-danger ml-4" (click)="logout()">

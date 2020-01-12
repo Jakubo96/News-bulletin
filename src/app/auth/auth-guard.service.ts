@@ -34,6 +34,13 @@ export class AuthGuard implements CanActivate {
       );
     }
 
+    if (routeConfig.thisUserOrAdmin) {
+      return this.firebaseAuth.user.pipe(
+        map(user => (user && (user.id === route.paramMap.get('id') || user.roles.admin) ?
+          true : this.accessDeniedUrlTree))
+      );
+    }
+
     return this.accessDeniedUrlTree;
   }
 }
