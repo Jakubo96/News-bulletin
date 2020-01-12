@@ -1,1 +1,14 @@
-<p>manage-users works!</p>
+<div class="container">
+  <div class="row">
+    <div class="col-3 mb-4" *ngFor="let user of users$ | async">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-center"><h5
+            class="card-title">{{ user.name ? user.name : user.email ? user.email : user.id }}</h5></div>
+          <div class="d-flex justify-content-center"><a [routerLink]="user.id" class="btn btn-primary">Edit user</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

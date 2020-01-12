@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FirestoreService } from '@app/services/firestore/firestore.service';
+import { User } from '@app/auth/user';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-manage-users',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ManageUsersComponent implements OnInit {
 
-  constructor() { }
+  public users$: Observable<User[]>;
 
-  ngOnInit() {
+  constructor(private firestoreService: FirestoreService) {
   }
 
+  ngOnInit() {
+    this.loadUsers();
+  }
+
+  private loadUsers(): void {
+    this.users$ = this.firestoreService.usersList$;
+  }
 }

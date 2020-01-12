@@ -19,9 +19,14 @@ export class FirestoreService {
   private _newsItems$ = new Map<string, Observable<News>>();
 
   private _usersCollection: AngularFirestoreCollection<User>;
+  private _usersList$: Observable<User[]>;
 
   public get newsList$(): Observable<News[]> {
     return this._newsList$;
+  }
+
+  public get usersList$(): Observable<User[]> {
+    return this._usersCollection.valueChanges();
   }
 
   constructor(private afs: AngularFirestore, private storage: AngularFireStorage) {
@@ -55,6 +60,7 @@ export class FirestoreService {
 
   private initializeUsers(): void {
     this._usersCollection = this.afs.collection<User>(FirestoreCollections.USERS);
+    this._usersList$ = this._usersCollection.valueChanges();
   }
 
   public getNewsItem(id: string): Observable<News> {
