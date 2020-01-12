@@ -5,20 +5,27 @@
     </div>
   </div>
   <ng-container *ngIf="newsList$ | async as newsList">
-    <div class="row" *ngIf="newsList.length else noNews">
-      <div class="col-4 mb-4" *ngFor="let news of newsList">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">{{ news.title }}</h5>
-            <p class="card-text">{{ news.content }}</p>
-            <a [routerLink]="news.id" class="btn btn-primary">Go to detail page</a>
+    <ng-container *ngIf="newsList.length else noNews">
+      <div class="row">
+        <div class="col-4 mb-4" *ngFor="let news of newsListPage">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">{{ news.title }}</h5>
+              <p class="card-text">{{ news.content }}</p>
+              <a [routerLink]="news.id" class="btn btn-primary">Go to detail page</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <div class="row mt-3 d-flex justify-content-center">
+        <ngb-pagination
+          [(page)]="page"
+          [pageSize]="pageSize"
+          [collectionSize]="newsList.length"></ngb-pagination>
+      </div>
+    </ng-container>
     <ng-template #noNews>
       <h1>No news available :(</h1>
     </ng-template>
   </ng-container>
 </div>
-

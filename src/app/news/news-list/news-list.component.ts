@@ -1,19 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { News } from '@app/news/news';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@app/auth/user';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
   styleUrls: ['./news-list.component.scss']
 })
-export class NewsListComponent implements OnInit {
+export class NewsListComponent implements OnInit, OnDestroy {
 
   public newsList$: Observable<News[]>;
+  public newsListPage: News[];
   public user$: Observable<User>;
+
+  private _page = 1;
+  private page$ = new BehaviorSubject<number>(this._page);
+
+  get page(): number {
+    return this._page;
+  }
+
+  set page(value: number) {
+    this._page = value;
+    this.page$.next(value);
+  }
+
+  public pageSize = 12;
+
+  private unsubscribe$ = new Subject();
 
   constructor(private firestoreService: FirestoreService, private route: ActivatedRoute,
               private router: Router) {
@@ -25,6 +43,11 @@ export class NewsListComponent implements OnInit {
     this.loadNewsList();
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   private loadNewsList(): void {
     const userId = this.route.snapshot.queryParamMap.get('userId');
 
@@ -34,5 +57,13 @@ export class NewsListComponent implements OnInit {
     } else {
       this.newsList$ = this.firestoreService.newsList$;
     }
+
+    combineLatest([
+      this.newsList$, this.page$])
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe(([news, page]) =>
+        this.newsListPage = news.slice(this.pageSize * (page - 1), this.pageSize * page));
   }
 }
