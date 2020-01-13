@@ -95,6 +95,10 @@ export class FirestoreService {
     this.initializeNews();
   }
 
+  public removeUser(id: string): void {
+    this.getUserDoc(id).delete();
+  }
+
   public uploadFile(filePath: string, file: Blob): Observable<any> {
     const ref = this.storage.ref(filePath);
 

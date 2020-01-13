@@ -21,9 +21,9 @@ import { LoginComponent } from '@app/auth/login/login.component';
 import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
-import { ManageUsersComponent } from '@app/auth/manage-users/manage-users.component';
+import { ManageUsersComponent } from '@app/users/manage-users/manage-users.component';
 import { IsAdminDirective } from '@app/auth/is-admin.directive';
-import { EditUserComponent } from '@app/edit-user/edit-user.component';
+import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 

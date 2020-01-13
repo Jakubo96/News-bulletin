@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { User } from '@app/auth/user';
 import { Subject } from 'rxjs';
@@ -21,6 +21,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
 
+  get isThisUser(): boolean {
+    return this.firebaseAuth.user.value.id === this.editedUser.id;
+  }
+
   get name(): AbstractControl {
     return this.userGroup.get('name');
   }
@@ -38,7 +42,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private toastr: ToastrService,
-              private firestoreService: FirestoreService, private firebaseAuth: FirebaseAuthService) {
+              private firestoreService: FirestoreService, private firebaseAuth: FirebaseAuthService,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -84,5 +89,12 @@ export class EditUserComponent implements OnInit, OnDestroy {
     }
 
     this.toastr.success(null, 'User updated');
+  }
+
+  public removeUser(): void {
+    this.firestoreService.removeUser(this.userId);
+
+    this.toastr.error(null, 'User removed');
+    this.router.navigate(['/users']);
   }
 }

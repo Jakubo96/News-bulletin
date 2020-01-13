@@ -11,8 +11,8 @@ import { AuthGuard } from '@app/auth/auth-guard.service';
 import { AuthorizedRoutes } from '@app/auth/authorized-route';
 import { Role } from '@app/auth/role.enum';
 import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
-import { ManageUsersComponent } from '@app/auth/manage-users/manage-users.component';
-import { EditUserComponent } from '@app/edit-user/edit-user.component';
+import { ManageUsersComponent } from '@app/users/manage-users/manage-users.component';
+import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 
 const routes: AuthorizedRoutes = [
   {

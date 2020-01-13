@@ -4,7 +4,7 @@
     </div>
     <div class="col-8" *ngIf="userGroup">
       <h3 class="d-inline">Edit: </h3><a class="font-weight-bold" routerLink="/news"
-                                              [queryParams]="{userId: editedUser.id}">{{ editedUser.name ? editedUser.name : editedUser.email ? editedUser.email : editedUser.id }}</a>
+                                         [queryParams]="{userId: editedUser.id}">{{ editedUser.name ? editedUser.name : editedUser.email ? editedUser.email : editedUser.id }}</a>
       <form [formGroup]="userGroup" (ngSubmit)="onSubmit()" class="w-50 mt-3">
         <div class="form-group">
           <label>Name</label>
@@ -33,10 +33,20 @@
           </div>
         </div>
 
-        <button [disabled]="!userGroup.valid" type="submit"
-                class="btn btn-success">
-          Edit
-        </button>
+        <div class="row">
+          <div class="col-6 d-flex justify-content-between">
+            <button [disabled]="!userGroup.valid" type="submit"
+                    class="btn btn-success">
+              Edit
+            </button>
+            <ng-container *ngIf="!isThisUser">
+              <button *appIsAdmin type="button" (click)="removeUser()"
+                      class="btn btn-danger">
+                Remove
+              </button>
+            </ng-container>
+          </div>
+        </div>
       </form>
     </div>
   </div>
