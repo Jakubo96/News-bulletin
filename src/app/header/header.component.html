@@ -6,7 +6,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
+      <li class="nav-item" *appIsAuthorOrAdmin>
         <a class="nav-link" routerLink="/create">Create news</a>
       </li>
       <li class="nav-item" *appIsAdmin>

@@ -26,6 +26,7 @@ import { IsAdminDirective } from '@app/auth/directives/is-admin.directive';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { IsAuthorOrAdminDirective } from '@app/auth/directives/is-author-or-admin.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ToastrModule } from 'ngx-toastr';
     PhoneLoginComponent,
     ManageUsersComponent,
     IsAdminDirective,
-    EditUserComponent
+    EditUserComponent,
+    IsAuthorOrAdminDirective
   ],
   imports: [
     BrowserModule,
