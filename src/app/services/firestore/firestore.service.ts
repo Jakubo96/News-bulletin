@@ -99,14 +99,18 @@ export class FirestoreService {
     this.getUserDoc(id).delete();
   }
 
-  public uploadFile(filePath: string, file: Blob): Observable<any> {
+  public uploadFile(filePath: string, file: Blob): Observable<number> {
     const ref = this.storage.ref(filePath);
 
-    return ref.put(file).snapshotChanges();
+    return ref.put(file).percentageChanges();
   }
 
   public getFileUrl(filePath: string): Observable<string> {
-    return this.storage.ref(filePath).getDownloadURL();
+    return new Observable<string>(observer =>
+      this.storage.ref(filePath).getDownloadURL().subscribe(value => {
+        observer.next(value);
+        observer.complete();
+      }));
   }
 
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {
