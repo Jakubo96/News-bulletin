@@ -1,36 +1,27 @@
-# Dealeat Mobile Application
+# News Buletin
 
-> A Nativescript-Vue app used to sell the foods' remainings
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.0-rc.7.
 
-## Usage
+## Development server
 
-### Install dependencies
-``` bash
-tns install
-```
-### Build for production
-```
-tns build <platform>
-```
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-###Build, watch for changes and debug the application
-```
-tns debug <platform>
-```
+## Code scaffolding
 
-### Build, watch for changes and run the application
-```
-tns run <platform>
-```
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-### Optional tns run/debug/build parameters
+## Build
 
-#### --env.server
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-Defaults to `gcp` (`https://api.dealeat.tk`)
+## Running unit tests
 
-You can also specify `local` (`http://10.0.2.2:8080`)
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-#### --env.apiUrl
+## Running end-to-end tests
 
-Override apiUrl if `--env.server` option is unsufficient
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
