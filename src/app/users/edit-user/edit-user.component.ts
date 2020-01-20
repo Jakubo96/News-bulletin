@@ -22,7 +22,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
 
   get isThisUser(): boolean {
-    return this.firebaseAuth.user.value.id === this.editedUser.id;
+    return this.firebaseAuth.userValue.id === this.editedUser.id;
   }
 
   get name(): AbstractControl {
@@ -77,7 +77,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    if (this.firebaseAuth.user.value.roles.admin) {
+    if (this.firebaseAuth.userValue.roles.admin) {
       this.firestoreService.updateUser({
         name: this.name.value,
         email: this.email.value,

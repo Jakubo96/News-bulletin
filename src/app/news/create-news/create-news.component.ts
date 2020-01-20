@@ -89,9 +89,9 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
           title: this.title.value,
           imagesUrls: this.imagesUrls,
           author: {
-            id: this.firebaseAuth.user.value.id,
-            name: this.firebaseAuth.user.value.name,
-            email: this.firebaseAuth.user.value.email
+            id: this.firebaseAuth.userValue.id,
+            name: this.firebaseAuth.userValue.name,
+            email: this.firebaseAuth.userValue.email
           },
           modified: Date.now(),
           created: Date.now()
@@ -149,7 +149,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
   }
 
   private canUserModifyThisNews(author: Partial<User>): boolean {
-    const loggedInUser = this.firebaseAuth.user.value;
+    const loggedInUser = this.firebaseAuth.userValue;
 
     return loggedInUser.roles.author && author.id === loggedInUser.id || loggedInUser.roles.admin;
   }
