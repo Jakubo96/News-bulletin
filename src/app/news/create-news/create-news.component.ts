@@ -3,8 +3,8 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
-import { Subject } from 'rxjs';
-import { finalize, takeUntil, tap } from 'rxjs/operators';
+import { concat, Observable, Subject } from 'rxjs';
+import { concatMap, takeLast, takeUntil, tap } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { User } from '@app/auth/user';
 import { ToastrService } from 'ngx-toastr';
@@ -55,18 +55,25 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
         ++this.imagesDuringUpload;
 
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) =>
-          this.firestoreService.uploadFile(droppedFile.relativePath, file)
-            .pipe(finalize(() => --this.imagesDuringUpload), takeUntil(this.unsubscribe$))
-            .subscribe(() => undefined, () => undefined,
-              () => this.firestoreService.getFileUrl(droppedFile.relativePath)
-                .pipe(takeUntil(this.unsubscribe$))
-                .subscribe(url => {
-                  this.imagesUrls.push(url);
-                  this.toastr.success(null, 'Image uploaded');
-                })));
+        concat(this.fileEntryFileObservable(fileEntry)
+            .pipe(concatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file))),
+          this.firestoreService.getFileUrl(droppedFile.relativePath))
+          .pipe(takeLast(1), takeUntil(this.unsubscribe$))
+          .subscribe(url => {
+            --this.imagesDuringUpload;
+            this.imagesUrls.push(url);
+            this.toastr.success(null, 'Image uploaded');
+          });
       }
     }
+  }
+
+  private fileEntryFileObservable(fileEntry: FileSystemFileEntry): Observable<File> {
+    return new Observable(observer =>
+      fileEntry.file(file => {
+        observer.next(file);
+        observer.complete();
+      }));
   }
 
   private isFileAllowed(droppedFile: NgxFileDropEntry): boolean {
