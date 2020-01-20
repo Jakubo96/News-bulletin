@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil, tap } from 'rxjs/operators';
-import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { User } from '@app/auth/user';
 import { ToastrService } from 'ngx-toastr';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

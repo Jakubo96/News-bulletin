@@ -5,7 +5,7 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { User } from '@app/auth/user';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

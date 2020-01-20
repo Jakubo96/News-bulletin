@@ -13,7 +13,7 @@ import { PageNotFoundComponent } from '@app/page-not-found/page-not-found.compon
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { IsCreatorOrAdminDirective } from '@app/auth/is-creator-or-admin.directive';
+import { IsCreatorOrAdminDirective } from '@app/auth/directives/is-creator-or-admin.directive';
 import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component';
 import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
 import { ImagesCarouselComponent } from '@app/images-carousel/images-carousel.component';
@@ -22,7 +22,7 @@ import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
 import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
 import { ManageUsersComponent } from '@app/users/manage-users/manage-users.component';
-import { IsAdminDirective } from '@app/auth/is-admin.directive';
+import { IsAdminDirective } from '@app/auth/directives/is-admin.directive';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';

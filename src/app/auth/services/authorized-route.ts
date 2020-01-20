@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { Role } from '@app/auth/role.enum';
+import { Role } from '@app/auth/services/role.enum';
 
 export interface AuthorizedRoute extends Route {
   accessAllowedTo?: Role;

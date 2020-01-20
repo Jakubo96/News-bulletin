@@ -1,12 +1,14 @@
-import { Directive, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { map, takeUntil } from 'rxjs/operators';
 
 @Directive({
-  selector: '[appIsAdmin]'
+  selector: '[appIsCreatorOrAdmin]'
 })
-export class IsAdminDirective implements OnInit, OnDestroy {
+export class IsCreatorOrAdminDirective implements OnInit, OnDestroy {
+
+  @Input() public appIsCreatorOrAdmin: string;
 
   public isVisible = false;
 
@@ -43,7 +45,7 @@ export class IsAdminDirective implements OnInit, OnDestroy {
   private checkPermissions(): Observable<boolean> {
     return this.firebaseAuth.user.pipe(
       takeUntil(this.unsubscribe$),
-      map(user => user && user.roles.admin)
+      map(user => user && (user.roles.author && this.appIsCreatorOrAdmin === user.id || user.roles.admin))
     );
   }
 }

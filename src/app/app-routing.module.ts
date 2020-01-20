@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NewsListComponent } from './news/news-list/news-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { NewsDetailComponent } from '@app/news/news-detail/news-detail.component';
 import { CreateNewsComponent } from '@app/news/create-news/create-news.component';
 import { LoginComponent } from '@app/auth/login/login.component';
 import { RegisterComponent } from '@app/auth/login/register/register.component';
 import { NotAuthorizedComponent } from '@app/auth/not-authorized/not-authorized.component';
-import { AuthGuard } from '@app/auth/auth-guard.service';
-import { AuthorizedRoutes } from '@app/auth/authorized-route';
-import { Role } from '@app/auth/role.enum';
+import { AuthGuard } from '@app/auth/services/auth-guard.service';
+import { AuthorizedRoutes } from '@app/auth/services/authorized-route';
+import { Role } from '@app/auth/services/role.enum';
 import { PhoneLoginComponent } from '@app/auth/login/phone-login/phone-login.component';
 import { ManageUsersComponent } from '@app/users/manage-users/manage-users.component';
 import { EditUserComponent } from '@app/users/edit-user/edit-user.component';
+import { NewsListComponent } from '@app/news/news-list/news-list.component';
 
 const routes: AuthorizedRoutes = [
   {

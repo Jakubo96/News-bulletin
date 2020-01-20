@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { auth } from 'firebase';
 import { WindowService } from '@app/auth/login/phone-login/window.service';
-import { FirebaseAuthService } from '@app/auth/firebase-auth.service';
+import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
