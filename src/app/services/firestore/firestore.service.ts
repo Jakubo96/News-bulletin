@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { News } from '@app/news/news';
 import { FirestoreCollections } from '@app/services/firestore/firestore-collections';
-import { Observable, of } from 'rxjs';
-import { flatMap, map } from 'rxjs/operators';
+import { defer, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { User } from '@app/auth/user';
 
@@ -106,10 +106,7 @@ export class FirestoreService {
   }
 
   public getFileUrl(filePath: string): Observable<string> {
-    return of(this.storage)
-      .pipe(
-        flatMap(storage => storage.ref(filePath).getDownloadURL())
-      );
+    return defer(() => this.storage.ref(filePath).getDownloadURL());
   }
 
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {
