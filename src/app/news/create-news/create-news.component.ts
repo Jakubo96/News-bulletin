@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
-import { concat, Observable, Subject } from 'rxjs';
+import { bindCallback, concat, Subject } from 'rxjs';
 import { concatMap, ignoreElements, takeUntil, tap } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { User } from '@app/auth/user';
@@ -55,7 +55,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
         ++this.imagesDuringUpload;
 
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        concat(this.fileEntryFileObservable(fileEntry)
+        concat(bindCallback(fileEntry.file)()
             .pipe(concatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file)),
               ignoreElements()),
           this.firestoreService.getFileUrl(droppedFile.relativePath))
@@ -67,14 +67,6 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
           });
       }
     }
-  }
-
-  private fileEntryFileObservable(fileEntry: FileSystemFileEntry): Observable<File> {
-    return new Observable(observer =>
-      fileEntry.file(file => {
-        observer.next(file);
-        observer.complete();
-      }));
   }
 
   private isFileAllowed(droppedFile: NgxFileDropEntry): boolean {
