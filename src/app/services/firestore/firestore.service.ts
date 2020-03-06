@@ -106,9 +106,9 @@ export class FirestoreService {
   }
 
   public getFileUrl(filePath: string): Observable<string> {
-    return of(this.storage)
+    return of(undefined)
       .pipe(
-        flatMap(storage => storage.ref(filePath).getDownloadURL())
+        flatMap(() => this.storage.ref(filePath).getDownloadURL())
       );
   }
 
