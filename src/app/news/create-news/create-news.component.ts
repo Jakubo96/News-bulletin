@@ -3,12 +3,14 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
-import { bindCallback, concat, Subject } from 'rxjs';
-import { concatMap, ignoreElements, takeUntil, tap } from 'rxjs/operators';
+import { bindCallback, concat } from 'rxjs';
+import { flatMap, ignoreElements, tap } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { User } from '@app/auth/user';
 import { ToastrService } from 'ngx-toastr';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-create-news',
   templateUrl: './create-news.component.html',
@@ -24,7 +26,6 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
     return this.newsForm.get('content');
   }
 
-  private unsubscribe$ = new Subject();
   private newsId: string;
 
   public newsForm: FormGroup;
@@ -45,28 +46,31 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   public dropped(files: NgxFileDropEntry[]): void {
     for (const droppedFile of files) {
       if (this.isFileAllowed(droppedFile)) {
-        ++this.imagesDuringUpload;
-
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        concat(bindCallback(fileEntry.file)()
-            .pipe(concatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file)),
-              ignoreElements()),
-          this.firestoreService.getFileUrl(droppedFile.relativePath))
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe(url => {
-            --this.imagesDuringUpload;
-            this.imagesUrls.push(url);
-            this.toastr.success(null, 'Image uploaded');
-          });
+        this.uploadFle(droppedFile);
       }
     }
+  }
+
+  private uploadFle(droppedFile: NgxFileDropEntry) {
+    ++this.imagesDuringUpload;
+
+    const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+    concat(
+      bindCallback(fileEntry.file)()
+        .pipe(flatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file)))
+        .pipe(ignoreElements()),
+      this.firestoreService.getFileUrl(droppedFile.relativePath)
+    )
+      .subscribe(url => {
+        --this.imagesDuringUpload;
+        this.imagesUrls.push(url);
+        this.toastr.success(null, 'Image uploaded');
+      });
   }
 
   private isFileAllowed(droppedFile: NgxFileDropEntry): boolean {
@@ -131,8 +135,7 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
           if (!this.canUserModifyThisNews(news.author)) {
             this.router.navigate(['/unauthorized']);
           }
-        }),
-        takeUntil(this.unsubscribe$)
+        })
       )
       .subscribe(newsItem => {
         this.title.setValue(newsItem.title);

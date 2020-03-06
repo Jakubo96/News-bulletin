@@ -3,8 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { User } from '@app/auth/user';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -18,8 +16,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
   public editedUser: User;
   public userGroup: FormGroup;
   public userId: string;
-
-  private unsubscribe$ = new Subject();
 
   get isThisUser(): boolean {
     return this.firebaseAuth.userValue.id === this.editedUser.id;
@@ -51,16 +47,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   private loadEditedUser(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
     this.firestoreService.getUser(this.userId)
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
       .subscribe(user => {
         this.editedUser = user;
         this.buildForm();
