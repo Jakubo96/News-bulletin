@@ -62,8 +62,8 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
     const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
     concat(
       bindCallback(fileEntry.file)()
-        .pipe(flatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file)))
-        .pipe(ignoreElements()),
+        .pipe(flatMap(file => this.firestoreService.uploadFile(droppedFile.relativePath, file)),
+          ignoreElements()),
       this.firestoreService.getFileUrl(droppedFile.relativePath)
     )
       .subscribe(url => {
