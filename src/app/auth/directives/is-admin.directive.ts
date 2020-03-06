@@ -1,7 +1,7 @@
 import { Directive, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
-import { map, takeUntil } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Directive({
   selector: '[appIsAdmin]'
@@ -9,8 +9,6 @@ import { map, takeUntil } from 'rxjs/operators';
 export class IsAdminDirective implements OnInit, OnDestroy {
 
   public isVisible = false;
-
-  private unsubscribe$ = new Subject();
 
   constructor(
     private viewContainerRef: ViewContainerRef,
@@ -24,8 +22,6 @@ export class IsAdminDirective implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   private updateTemplateState(): void {
@@ -42,7 +38,6 @@ export class IsAdminDirective implements OnInit, OnDestroy {
 
   private checkPermissions(): Observable<boolean> {
     return this.firebaseAuth.user.pipe(
-      takeUntil(this.unsubscribe$),
       map(user => user && user.roles.admin)
     );
   }

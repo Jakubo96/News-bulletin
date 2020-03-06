@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { News } from '@app/news/news';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '@app/auth/user';
-import { takeUntil } from 'rxjs/operators';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-news-list',
   templateUrl: './news-list.component.html',
@@ -31,8 +32,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
   public pageSize = 12;
 
-  private unsubscribe$ = new Subject();
-
   constructor(private firestoreService: FirestoreService, private route: ActivatedRoute,
               private router: Router) {
   }
@@ -44,8 +43,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
   private loadNewsList(): void {
@@ -60,9 +57,6 @@ export class NewsListComponent implements OnInit, OnDestroy {
 
     combineLatest([
       this.newsList$, this.page$])
-      .pipe(
-        takeUntil(this.unsubscribe$)
-      )
       .subscribe(([news, page]) =>
         this.newsListPage = news.slice(this.pageSize * (page - 1), this.pageSize * page));
   }
