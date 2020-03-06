@@ -52,21 +52,25 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
   public dropped(files: NgxFileDropEntry[]): void {
     for (const droppedFile of files) {
       if (this.isFileAllowed(droppedFile)) {
-        ++this.imagesDuringUpload;
-
-        const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
-        fileEntry.file((file: File) =>
-          this.firestoreService.uploadFile(droppedFile.relativePath, file)
-            .pipe(finalize(() => --this.imagesDuringUpload), takeUntil(this.unsubscribe$))
-            .subscribe(() => undefined, () => undefined,
-              () => this.firestoreService.getFileUrl(droppedFile.relativePath)
-                .pipe(takeUntil(this.unsubscribe$))
-                .subscribe(url => {
-                  this.imagesUrls.push(url);
-                  this.toastr.success(null, 'Image uploaded');
-                })));
+        this.uploadFle(droppedFile);
       }
     }
+  }
+
+  private uploadFle(droppedFile: NgxFileDropEntry) {
+    ++this.imagesDuringUpload;
+
+    const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
+    fileEntry.file((file: File) =>
+      this.firestoreService.uploadFile(droppedFile.relativePath, file)
+        .pipe(finalize(() => --this.imagesDuringUpload), takeUntil(this.unsubscribe$))
+        .subscribe(() => undefined, () => undefined,
+          () => this.firestoreService.getFileUrl(droppedFile.relativePath)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(url => {
+              this.imagesUrls.push(url);
+              this.toastr.success(null, 'Image uploaded');
+            })));
   }
 
   private isFileAllowed(droppedFile: NgxFileDropEntry): boolean {

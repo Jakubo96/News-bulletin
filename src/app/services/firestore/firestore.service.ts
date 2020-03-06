@@ -99,10 +99,10 @@ export class FirestoreService {
     this.getUserDoc(id).delete();
   }
 
-  public uploadFile(filePath: string, file: Blob): Observable<any> {
+  public uploadFile(filePath: string, file: Blob): Observable<number> {
     const ref = this.storage.ref(filePath);
 
-    return ref.put(file).snapshotChanges();
+    return ref.put(file).percentageChanges();
   }
 
   public getFileUrl(filePath: string): Observable<string> {
