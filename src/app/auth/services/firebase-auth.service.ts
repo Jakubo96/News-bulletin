@@ -1,19 +1,20 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { BehaviorSubject, of, Subject } from 'rxjs';
-import { switchMap, take, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
 import { User } from '@app/auth/user';
 import { auth } from 'firebase';
 import { FirestoreService } from '@app/services/firestore/firestore.service';
+import { AutoUnsubscribe } from 'ngx-auto-unsubscribe';
 import ApplicationVerifier = firebase.auth.ApplicationVerifier;
 
+@AutoUnsubscribe()
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseAuthService implements OnDestroy {
 
   private _user: BehaviorSubject<User> = new BehaviorSubject(null);
-  private unsubscribe$ = new Subject();
 
   get user(): BehaviorSubject<User> {
     return this._user;
@@ -25,14 +26,11 @@ export class FirebaseAuthService implements OnDestroy {
       .pipe(
         switchMap(user => user ?
           this.firestoreService.getUser(user.uid) :
-          of(null)),
-        takeUntil(this.unsubscribe$))
+          of(null)))
       .subscribe(user => this._user.next(user));
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
 
 
@@ -90,7 +88,7 @@ export class FirebaseAuthService implements OnDestroy {
     const doc = this.firestoreService.getUser(authData.uid);
 
     doc
-      .pipe(take(1), takeUntil(this.unsubscribe$))
+      .pipe(take(1))
       .subscribe(user => {
         if (!user) {
           this.firestoreService.createUser(authData.uid, userData);
