@@ -4,7 +4,7 @@ import { FirestoreService } from '@app/services/firestore/firestore.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileSystemFileEntry, NgxFileDropEntry } from 'ngx-file-drop';
 import { concat, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeLast, takeUntil, tap } from 'rxjs/operators';
 import { FirebaseAuthService } from '@app/auth/services/firebase-auth.service';
 import { User } from '@app/auth/user';
 import { ToastrService } from 'ngx-toastr';
@@ -66,8 +66,11 @@ export class CreateNewsComponent implements OnInit, OnDestroy {
         this.firestoreService.uploadFile(droppedFile.relativePath, file),
         this.firestoreService.getFileUrl(droppedFile.relativePath)
       )
-        .pipe(takeUntil(this.unsubscribe$))
+        .pipe(takeLast(1), takeUntil(this.unsubscribe$))
         .subscribe(url => {
+          if (typeof url !== 'string') {
+            return;
+          }
           --this.imagesDuringUpload;
           this.imagesUrls.push(url);
           this.toastr.success(null, 'Image uploaded');
