@@ -106,7 +106,11 @@ export class FirestoreService {
   }
 
   public getFileUrl(filePath: string): Observable<string> {
-    return this.storage.ref(filePath).getDownloadURL();
+    return new Observable<string>(observer =>
+      this.storage.ref(filePath).getDownloadURL().subscribe(value => {
+        observer.next(value);
+        observer.complete();
+      }));
   }
 
   private getNewsDoc(id: string): AngularFirestoreDocument<News> {
